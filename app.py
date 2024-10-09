@@ -1,11 +1,9 @@
 import csv, time, os
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
-# Define the path to the ChromeDriver
-CHROME_DRIVER_PATH = os.getcwd() + "/chromedriver"
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Load already submitted records to avoid duplicates
 def load_submitted(file='submitted.csv'):
@@ -52,8 +50,8 @@ def click_next_or_submit(driver):
 
 # Function to submit a single form
 def submit_form(csv_headers, csv_data, submitted_set):
-    # Using Service to specify the ChromeDriver path
-    service = Service(CHROME_DRIVER_PATH)
+    # Use webdriver-manager to automatically manage ChromeDriver
+    service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
 
     # Open the form URL
